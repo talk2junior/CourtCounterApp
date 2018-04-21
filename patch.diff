@@ -1,0 +1,325 @@
+From a58beb7e255aedea1035bc2339d54d0c3f627f41 Mon Sep 17 00:00:00 2001
+From: talk2junior <talk2junior@gmail.com>
+Date: Thu, 10 Nov 2016 12:24:34 -0500
+Subject: [PATCH] Initial Save for Court Counter App
+
+Upload from Android Studio files for court counter app via Udacity
+lesson
+---
+ AndroidManifest.xml |  20 +++++++
+ MainActivity.java   |  99 ++++++++++++++++++++++++++++++++++
+ activity_main.xml   | 152 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ styles.xml          |   9 ++++
+ 4 files changed, 280 insertions(+)
+ create mode 100644 AndroidManifest.xml
+ create mode 100644 MainActivity.java
+ create mode 100644 activity_main.xml
+ create mode 100644 styles.xml
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+new file mode 100644
+index 0000000..bb52e6a
+--- /dev/null
++++ b/AndroidManifest.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.example.android.courtcounter">
++
++    <application
++        android:allowBackup="true"
++        android:icon="@mipmap/ic_launcher"
++        android:label="@string/app_name"
++        android:supportsRtl="true"
++        android:theme="@style/AppTheme">
++        <activity android:name=".MainActivity">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++
++</manifest>
+diff --git a/MainActivity.java b/MainActivity.java
+new file mode 100644
+index 0000000..492c6de
+--- /dev/null
++++ b/MainActivity.java
+@@ -0,0 +1,99 @@
++package com.example.android.courtcounter;
++
++import android.support.v7.app.AppCompatActivity;
++import android.os.Bundle;
++import android.view.View;
++import android.widget.TextView;
++
++import static com.example.android.courtcounter.R.id.screen;
++import static com.example.android.courtcounter.R.id.team_a_score;
++import static com.example.android.courtcounter.R.id.team_b_score;
++
++
++public class MainActivity extends AppCompatActivity {
++    /**
++     * global variables are always outside of the methods within the code
++     */
++    int scoreTeamA = 0;
++    int scoreTeamB = 0;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_main);
++    }
++
++    /**
++     * This method will increase the score for Team A by 3
++     */
++    public void addThreeForTeamA(View view) {
++        scoreTeamA = scoreTeamA + 3;
++        displayForTeamA(scoreTeamA);
++    }
++
++    /**
++     * This method will increase the score for Team A by 2
++     */
++    public void addTwoForTeamA(View view) {
++        scoreTeamA = scoreTeamA + 2;
++        displayForTeamA(scoreTeamA);
++    }
++
++    /**
++     * This method will increase the score for Team A by 1
++     */
++    public void addOneForTeamA(View view) {
++        scoreTeamA = scoreTeamA + 1;
++        displayForTeamA(scoreTeamA);
++    }
++
++    /**
++     * This method will reset the score for Team A
++     */
++    public void resetScoreForTeams(View view) {
++        int scoreTeamA = 0;
++        int scoreTeamB = 0;
++        displayForTeamA(scoreTeamA);
++        displayForTeamB(scoreTeamB);
++    }
++
++    /**
++     * This method will display the given score for Team A
++     */
++    public void displayForTeamA(int scoreTeamA) {
++        TextView scoreView = (TextView) findViewById(team_a_score);
++        scoreView.setText(String.valueOf(scoreTeamA));
++    }
++
++    /**
++     * This method will increase the score for Team B by 3
++     */
++    public void addThreeForTeamB(View view) {
++        scoreTeamB = scoreTeamB + 3;
++        displayForTeamB(scoreTeamB);
++    }
++
++    /**
++     * This method will increase the score for Team B by 2
++     */
++    public void addTwoForTeamB(View view) {
++        scoreTeamB = scoreTeamB + 2;
++        displayForTeamB(scoreTeamB);
++    }
++
++    /**
++     * This method will increase the score for Team B by 1
++     */
++    public void addOneForTeamB(View view) {
++        scoreTeamB = scoreTeamB + 1;
++        displayForTeamB(scoreTeamB);
++    }
++
++    /**
++     * This method will display the given score for Team B
++     */
++    public void displayForTeamB(int scoreTeamB) {
++        TextView scoreView = (TextView) findViewById(team_b_score);
++        scoreView.setText(String.valueOf(scoreTeamB));
++    }
++}
+diff --git a/activity_main.xml b/activity_main.xml
+new file mode 100644
+index 0000000..b73ab5e
+--- /dev/null
++++ b/activity_main.xml
+@@ -0,0 +1,152 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/activity_main"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="horizontal"
++    tools:context="com.example.android.courtcounter.MainActivity">
++
++    <Button
++        android:id="@+id/resetTeamScore"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignParentBottom="true"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="32dp"
++        android:onClick="resetScoreForTeams"
++        android:text="Reset" />
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal"
++        android:layout_alignParentTop="true"
++        android:layout_alignParentLeft="true"
++        android:layout_alignParentStart="true">
++
++        <LinearLayout
++            android:id="@+id/teamA"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:orientation="vertical">
++
++            <TextView
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:gravity="center"
++                android:padding="16dp"
++                android:text="Team A"
++                android:textColor="#616161"
++                android:fontFamily="sans-serif-medium"/>
++
++            <TextView
++                android:id="@+id/team_a_score"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:gravity="center"
++                android:paddingBottom="24dp"
++                android:text="0"
++                android:textSize="84sp"
++                android:textColor="#000000"
++                android:fontFamily="sans-serif-light"/>
++
++            <Button
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:layout_marginLeft="24dp"
++                android:layout_marginRight="24dp"
++                android:paddingBottom="8dp"
++                android:onClick="addThreeForTeamA"
++                android:text="+3 Points" />
++
++            <Button
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:layout_marginLeft="24dp"
++                android:layout_marginRight="24dp"
++                android:paddingBottom="8dp"
++                android:onClick="addTwoForTeamA"
++                android:text="+2 Points" />
++
++            <Button
++                android:id="@+id/button"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:layout_marginLeft="24dp"
++                android:layout_marginRight="24dp"
++                android:onClick="addOneForTeamA"
++                android:text="Free Throw" />
++
++        </LinearLayout>
++
++        <View
++            android:layout_width="1dp"
++            android:layout_height="match_parent"
++            android:layout_marginTop="16dp"
++            android:padding="1dp"
++            android:background="@android:color/darker_gray">
++
++        </View>
++
++        <LinearLayout
++            android:id="@+id/teamB"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:orientation="vertical">
++
++            <TextView
++                android:id="@+id/textView"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:gravity="center"
++                android:padding="16dp"
++                android:text="Team B"
++                android:textColor="#616161"
++                android:fontFamily="sans-serif-medium"/>
++
++            <TextView
++                android:id="@+id/team_b_score"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:gravity="center"
++                android:paddingBottom="24dp"
++                android:text="0"
++                android:textSize="84sp"
++                android:textColor="#000000"
++                android:fontFamily="sans-serif-light"/>
++
++            <Button
++                android:id="@+id/button3"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:layout_marginLeft="24dp"
++                android:layout_marginRight="24dp"
++                android:onClick="addThreeForTeamB"
++                android:text="+3 Points" />
++
++            <Button
++                android:id="@+id/button4"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:layout_marginLeft="24dp"
++                android:layout_marginRight="24dp"
++                android:onClick="addTwoForTeamB"
++                android:text="+2 Points" />
++
++            <Button
++                android:id="@+id/button2"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                android:layout_marginLeft="24dp"
++                android:layout_marginRight="24dp"
++                android:onClick="addOneForTeamB"
++                android:text="Free Throw" />
++
++        </LinearLayout>
++
++    </LinearLayout>
++
++</RelativeLayout>
+diff --git a/styles.xml b/styles.xml
+new file mode 100644
+index 0000000..b3694f5
+--- /dev/null
++++ b/styles.xml
+@@ -0,0 +1,9 @@
++<resources>
++    <!-- Base application theme. -->
++    <style name="AppTheme" parent="Theme.AppCompat.Light">
++        <!-- Primary theme color of the app (sets background color of app bar) -->
++        <item name="colorPrimary">#FF9800</item>
++        <!-- Background color of buttons in the app -->
++        <item name="colorButtonNormal">#FF9800</item>
++    </style>
++</resources>
+-- 
+2.10.1
+
